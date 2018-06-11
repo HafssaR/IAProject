@@ -12,7 +12,6 @@ import matplotlib.pyplot as plt
 import scipy
 from PIL import Image
 from scipy import ndimage
-#from dnn_app_utils_v2 import *
 import os
 get_ipython().magic('matplotlib inline')
 plt.rcParams['figure.figsize'] = (5.0, 4.0) # set default size of plots
@@ -41,10 +40,8 @@ for filename in os.listdir("D:/IAProjet/ProjetIA/TrainSet"):
         file= open(os.path.join("D:/IAProjet/ProjetIA/TrainSet", filename), "r")
         data=file.read().replace('\n', '')
         file.close()
-        e = indices_mots(data)
       
-        for i in e:
-            
+        for i in indices_mots(data):  
             X[i][k]=1
         Y[0][k]=1
     elif filename.endswith("ham.txt"): 
@@ -54,19 +51,12 @@ for filename in os.listdir("D:/IAProjet/ProjetIA/TrainSet"):
         file= open(os.path.join("D:/IAProjet/ProjetIA/TrainSet", filename), "r")
         data=file.read().replace('\n', '')
         file.close()
-        e = indices_mots(data)
-        for j in e:
-          
+        for j in indices_mots(data):
             X[j][k]=1
-        Y[0][k]=0
-print(spam)
-print(ham)
-print(spam+ham)      
+        Y[0][k]=0      
 
 train_x=X
 train_y=Y 
-
-
 
 Yt =np.zeros((1,1678))
 Xt= np.zeros((1899,1678))
@@ -81,10 +71,8 @@ for filename in os.listdir("D:/IAProjet/ProjetIA/TestSet"):
         file= open(os.path.join("D:/IAProjet/ProjetIA/TestSet", filename), "r")
         data=file.read().replace('\n', '')
         file.close()
-        e = indices_mots(data)
         
-        for i in e:
-            
+        for i in indices_mots(data):
             Xt[i][l]=1
         Yt[0][l]=1
     elif filename.endswith("ham.txt"): 
@@ -94,14 +82,10 @@ for filename in os.listdir("D:/IAProjet/ProjetIA/TestSet"):
         file= open(os.path.join("D:/IAProjet/ProjetIA/TestSet", filename), "r")
         data=file.read().replace('\n', '')
         file.close()
-        e = indices_mots(data)
-     
-        for j in e:
+        for j in indices_mots(data):
             Xt[j][l]=1
         Yt[0][l]=0    
-print(spam)
-print(ham)
-print(spam+ham) 
+ 
         
 test_x = Xt
 test_y = Yt
@@ -186,13 +170,6 @@ def two_layer_model(X, Y, layers_dims, learning_rate = 0.0075, num_iterations = 
     return parameters
 
 parameters = two_layer_model(train_x, train_y, layers_dims = (n_x, n_h, n_y), num_iterations = 3500, print_cost=True)
-
-
-print(parameters)
-
-
-
-
 
 def test(X, Y, parameters):
     ypred = np.zeros(Y.shape)
